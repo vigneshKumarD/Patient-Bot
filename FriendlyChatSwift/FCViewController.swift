@@ -26,10 +26,6 @@ import GoogleMobileAds
 import ApiAI
 
 
-
-
-
-
 /**
  * AdMob ad unit IDs are not currently stored inside the google-services.plist file. Developers
  * using AdMob can store them as custom values in another plist, or simply use constants. Note that
