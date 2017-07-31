@@ -392,8 +392,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
         //API.AI bot  response
       let text = message[Constants.MessageFields.text] ?? ""
-        
-       if let textSpeech = message[Constants.MessageFields.speech] {
+      if let textSpeech = message[Constants.MessageFields.speech] {
         
         cell.lblChatText.text = "\(textSpeech ) "
         cell.lblChatText.textColor = UIColor.black
@@ -516,9 +515,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                     self.narrateTheText(text: responseSpeech)
                 }
                 
-                
                 let requestToPass : NSMutableDictionary = ["speech":responseSpeech]
-               
                 let metaData : NSDictionary! = id.value(forKey: "metadata") as! NSDictionary
                 _ = metaData.value(forKey:"intentName") ?? ""
                 
@@ -545,26 +542,19 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         if (parameters?.value(forKey: "SymptomList") is Array<Any>){
                             
                             self.multipleOptionsArray  = parameters?.value(forKey:"SymptomList") as!Array<Any> as NSArray
-                            
                             let stringValues = self.multipleOptionsArray.componentsJoined(by: ",")
                             print(stringValues)
                             self.listOfOptions = (symptomList?.components(separatedBy: ","))!
-                            
-                            
+                        
                         }
                         else if(parameters?.value(forKey: "SymptomList") is NSString){
                             
                             let efs : NSString = (parameters?.value(forKey:"SymptomList") as? NSString)!
                             self.multipleOptionvalue = efs.components(separatedBy: ",")
-                            
-                        
                             self.listOfOptions = self.multipleOptionvalue
 
                         }
                             
-                        //self.multipleOptionsArray  = parameters?.value(forKey:"SymptomList") as!Array<Any> as NSArray
-                       
-                        
                         self.showOptionView()
                         
                         var iterationCount = 0
@@ -580,8 +570,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                             
                         }
                         
-                        
-                        //
                         self.sendButton.isHidden =  true
                         self.btnSendOptions.isHidden =  false
                         self.btnNoneOfThese.isHidden = false
@@ -593,7 +581,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         self.listOfOptions.removeAll()
                         let SingleOptionList : NSString  = (parameters?.value(forKey:"SingleOptionList") as? NSString)!
                         self.singleListOptions = SingleOptionList.components(separatedBy: ",")
-                        
                         
                         //SingleListOptions
                        var iterationCount = 0
@@ -615,10 +602,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         self.btnNoneOfThese.isHidden = true
                         
                     }
-      
-                    
-                    
-                    }
+                  }
                 }
                 else{
                       self.hideOptionView()
@@ -877,6 +861,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             
             return;
         }
+        //Sorting values alphabetically
         let swiftArray = optionsSelectedArray as AnyObject as! [String]
         let sortedArray = swiftArray.sorted{ $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending }
         
@@ -885,6 +870,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
         let data = [Constants.MessageFields.text: symptomsToPass]
         sendMessage(withData: data )
+        
+        self.optionsSelectedArray.removeAllObjects()
         
         for  btn in self.buttonOptionsArray {
             (btn as! UIButton).isSelected = false
@@ -980,6 +967,11 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             for  btn in self.buttonOptionsArray {
                 (btn as! UIButton).isSelected = false
             }
+            
+//            self.btnOptions1.isSelected = false
+//            self.btnOptions2.isSelected = false
+//            self.btnOptions3.isSelected = false
+//            self.btnOptions4.isSelected = false
         }
         
         hideOptionView()
