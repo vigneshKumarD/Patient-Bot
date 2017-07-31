@@ -59,15 +59,21 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     @IBOutlet var btnOptions4: UIButton!
     @IBOutlet var btnNoneOfThese: UIButton!
     
+    @IBOutlet weak var btnSendAllOptions: UIButton!
+    var buttonOptionsArray = NSMutableArray()
+   var optionsSelectedArray = NSMutableArray()
+    
     
   var ref: DatabaseReference!
   var messages: [DataSnapshot]! = []
-  var msglength: NSNumber = 200
+  var msglength: NSNumber = 400
   var apiAi = ApiAI()
     
   var cell = StackTableViewCell()
   var multipleOptionsArray = NSArray()
-    var listOfOptions  : [String] = [""]
+    var multipleOptionvalue : [String] = [""]
+    var listOfOptions  : [String?] = [""]
+     var singleListOptions  : [String?] = [""]
     
   var storedOffsets = [Int: CGFloat]()
     
@@ -91,6 +97,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    
+    buttonOptionsArray = [self.btnOptions1,self.btnOptions2,self.btnOptions3,self.btnOptions4]
     headerView.layer.shadowColor = UIColor.lightGray.cgColor
     clientTable.rowHeight = UITableViewAutomaticDimension
    
@@ -104,7 +112,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
 
     //Speech
-    
     self.requestSpeechCalls()
     
   }
@@ -502,7 +509,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             let responseSpeech  = responseFulfillment.value(forKey: "speech") as! String
            // print(responseSpeech)
                 
-                let st = "1"
+                let st = "0"
             //MARK:TODO
                 if st == "1" {
                     
@@ -513,7 +520,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                 let requestToPass : NSMutableDictionary = ["speech":responseSpeech]
                
                 let metaData : NSDictionary! = id.value(forKey: "metadata") as! NSDictionary
-                let intentName = metaData.value(forKey:"intentName") ?? ""
+                _ = metaData.value(forKey:"intentName") ?? ""
                 
                
                 requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
@@ -525,30 +532,91 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                 
                 let parameters : NSDictionary? = id.value(forKey: "parameters") as? NSDictionary
                 
-                if parameters != nil
-                {
-                let diseaseList : NSArray? = parameters!.value(forKey: "cancer") as? NSArray
-                
+                if parameters != nil                {
+                let diseaseList : NSArray? = parameters!.value(forKey: "SymptomList") as? NSArray
                 let symptomList = diseaseList?[0] as? String
                 
                 if (parameters?.count)! > 0 {
-                self.multipleOptionsArray  = parameters?.value(forKey:"\(intentName)") as!Array<Any> as NSArray
-                    print(self.multipleOptionsArray)
+                    //handle SymptomList and SingleOptionList list
+                    if parameters?.value(forKey:"SymptomList") != nil
+                    {
+                        self.singleListOptions.removeAll()
+                        
+                        if (parameters?.value(forKey: "SymptomList") is Array<Any>){
+                            
+                            self.multipleOptionsArray  = parameters?.value(forKey:"SymptomList") as!Array<Any> as NSArray
+                            
+                            let stringValues = self.multipleOptionsArray.componentsJoined(by: ",")
+                            print(stringValues)
+                            self.listOfOptions = (symptomList?.components(separatedBy: ","))!
+                            
+                            
+                        }
+                        else if(parameters?.value(forKey: "SymptomList") is NSString){
+                            
+                            let efs : NSString = (parameters?.value(forKey:"SymptomList") as? NSString)!
+                            self.multipleOptionvalue = efs.components(separatedBy: ",")
+                            
+                        
+                            self.listOfOptions = self.multipleOptionvalue
 
-                   // self.clientTable .reloadData()
+                        }
+                            
+                        //self.multipleOptionsArray  = parameters?.value(forKey:"SymptomList") as!Array<Any> as NSArray
+                       
+                        
+                        self.showOptionView()
+                        
+                        var iterationCount = 0
+                        for item in self.listOfOptions {
+                            
+                           if iterationCount < 4
+                            {
+                            let btn : UIButton = self.buttonOptionsArray[iterationCount] as! UIButton
+                            iterationCount += 1
+                            btn.setTitle(item, for: UIControlState.normal)
+                            btn.isHidden =  false
+                            }
+                            
+                        }
+                        
+                        
+                        //
+                        self.sendButton.isHidden =  true
+                        self.btnSendOptions.isHidden =  false
+                        self.btnNoneOfThese.isHidden = false
+                        self.btnNoneOfThese.setTitle("None of these", for: UIControlState.normal)
+                 
+                    }
+                    else if parameters?.value(forKey:"SingleOptionList") != nil {
+                        
+                        self.listOfOptions.removeAll()
+                        let SingleOptionList : NSString  = (parameters?.value(forKey:"SingleOptionList") as? NSString)!
+                        self.singleListOptions = SingleOptionList.components(separatedBy: ",")
+                        
+                        
+                        //SingleListOptions
+                       var iterationCount = 0
+                        
+                        for item in self.singleListOptions{
+                            let btn : UIButton = self.buttonOptionsArray[iterationCount] as! UIButton
+                            iterationCount += 1
+                            btn.setTitle(item, for: UIControlState.normal)
+                            btn.isHidden =  false
+                            
+                        }
+                        
+                        self.view.endEditing(true)
+                        self.consBottomOptions.constant = -100.0
+                        self.textField.isHidden = true
+                                              
+                        self.btnSendOptions.isHidden = true
+                        self.sendButton.isHidden =  true
+                        self.btnNoneOfThese.isHidden = true
+                        
+                    }
+      
                     
-                    let stringValues = self.multipleOptionsArray.componentsJoined(by: ",")
-                    print(stringValues)
-                    self.listOfOptions = (symptomList?.components(separatedBy: ","))!
-                    
-                   
-                   self.showOptionView()
-                    
-                    self.btnOptions1.setTitle(self.listOfOptions[0] , for: UIControlState.normal)
-                    self.btnOptions2.setTitle(self.listOfOptions[1] , for: UIControlState.normal)
-                    self.btnOptions3.setTitle(self.listOfOptions[2] , for: UIControlState.normal)
-                    self.btnOptions4.setTitle(self.listOfOptions[3] , for: UIControlState.normal)
-                    self.btnNoneOfThese.setTitle("None of these", for: UIControlState.normal)
                     
                     }
                 }
@@ -805,36 +873,118 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
        hideOptionView()
         
+        guard optionsSelectedArray.count > 0 else {
+            
+            return;
+        }
+        let swiftArray = optionsSelectedArray as AnyObject as! [String]
+        let sortedArray = swiftArray.sorted{ $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending }
+        
+        let symptomsToPass = sortedArray.joined(separator: ",")
+        print(symptomsToPass)
+        
+        let data = [Constants.MessageFields.text: symptomsToPass]
+        sendMessage(withData: data )
+        
+        for  btn in self.buttonOptionsArray {
+            (btn as! UIButton).isSelected = false
+        }
         
     }
 
-    @IBAction func btnOption1Action(_ sender: Any) {
+    @IBAction func btnOption1Action(_ sender: UIButton) {
         
-        hideOptionView()
-        let data = [Constants.MessageFields.text: self.listOfOptions[0]]
-        sendMessage(withData: data )
+        
+        if (self.listOfOptions.count > 0 && sender.isSelected == false) {
+            
+            optionsSelectedArray.add(self.listOfOptions[0]!)
+            sender.isSelected = true
+        }
+        else if (self.listOfOptions.count > 0 && sender.isSelected == true){ //Single Options YES/NO
+            
+            optionsSelectedArray.remove(self.listOfOptions[0]!)
+            sender.isSelected = false
+            
+        }
+        else{
+               //Single Options YES/NO
+                hideOptionView()
+                let data = [Constants.MessageFields.text: self.singleListOptions[0]]
+                sendMessage(withData: data as! [String : String] )
+            
+        }
+        
     }
         
   
     
-    @IBAction func btnOptions2Action(_ sender: Any) {
-         hideOptionView()
+    @IBAction func btnOptions2Action(_ sender: UIButton) {
+        if (self.listOfOptions.count > 0 && sender.isSelected == false) {
+            
+            optionsSelectedArray.add(self.listOfOptions[1]!)
+             sender.isSelected = true
+        }
+        else if (self.listOfOptions.count > 0 && sender.isSelected == true){ //Single Options YES/NO
+            
+            optionsSelectedArray.remove(self.listOfOptions[1]!)
+             sender.isSelected = false
+            
+        }
+        else{ //Single Options YES/NO
+            
+            hideOptionView()
+            let data = [Constants.MessageFields.text: self.singleListOptions[1]]
+            sendMessage(withData: data as! [String : String] )
+            
+        }
     }
     
     
-    @IBAction func btnOption3Action(_ sender: Any) {
+    @IBAction func btnOption3Action(_ sender: UIButton) {
         
-         hideOptionView()
+        if (self.listOfOptions.count > 0 && sender.isSelected == false) {
+            
+            optionsSelectedArray.add(self.listOfOptions[2]!)
+             sender.isSelected = true
+        }
+        else if (self.listOfOptions.count > 0 && sender.isSelected == true){ //Single Options YES/NO
+            
+            optionsSelectedArray.remove(self.listOfOptions[2]!)
+             sender.isSelected = false
+            
+        }
     }
     
-    @IBAction func btnOption4Action(_ sender: Any) {
+    @IBAction func btnOption4Action(_ sender: UIButton) {
         
-         hideOptionView()
+        if (self.listOfOptions.count > 0 && sender.isSelected == false) {
+            
+            optionsSelectedArray.add(self.listOfOptions[3]!)
+             sender.isSelected = true
+        }
+        else if (self.listOfOptions.count > 0 && sender.isSelected == true){ //Single Options YES/NO
+            
+            optionsSelectedArray.remove(self.listOfOptions[3]!)
+             sender.isSelected = false
+            
+        }
     }
     
-    @IBAction func btnNoneOfTheseAction(_ sender: Any) {
+    @IBAction func btnNoneOfTheseAction(_ sender: UIButton) {
         
-       hideOptionView()
+        
+        if self.optionsSelectedArray.count > 0 {
+            
+            self.optionsSelectedArray.removeAllObjects()
+
+            for  btn in self.buttonOptionsArray {
+                (btn as! UIButton).isSelected = false
+            }
+        }
+        
+        hideOptionView()
+        let data = [Constants.MessageFields.text: "None of These"]
+        sendMessage(withData: data )
 
         
     }
