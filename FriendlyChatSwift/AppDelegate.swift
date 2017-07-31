@@ -68,10 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     let configuration: AIConfiguration = AIDefaultConfiguration()
     
     //Team 's account
-   // configuration.clientAccessToken = "33ed587a20af4b5c9b96300aff4e9dff"
+    configuration.clientAccessToken = "09744aa8a2a04880bd0120c8da49e3d5"
     
     //vignesh account
-    configuration.clientAccessToken = "ef5e5a6cbe1a484c83cfc4a6d1535926"
+   // configuration.clientAccessToken = "ef5e5a6cbe1a484c83cfc4a6d1535926"
     
     apiai.configuration = configuration
 

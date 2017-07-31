@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Your microphone will be used to record your speech when you press the &quot;Start Recording&quot; button.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -33,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.274153386604-vlv4dd3mfr1nk40f7j32dc917qrmmkp5</string>
+				<string>com.googleusercontent.apps.673247272715-34m6oh87ivu25est6u74n4fr9ambmjdf</string>
 			</array>
 		</dict>
 	</array>
@@ -45,8 +41,12 @@
 	<string>Take and upload photos to Cloud Storage</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Used for Firebase Invites</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your microphone will be used to record your speech when you press the "Start Recording" button.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload photo to Cloud Storage</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition will be used to determine which words you speak into this device's microphone.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
