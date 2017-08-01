@@ -73,8 +73,10 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   var multipleOptionsArray = NSArray()
     var multipleOptionvalue : [String] = [""]
     var listOfOptions  : [String?] = [""]
-     var singleListOptions  : [String?] = [""]
+    var singleListOptions  : [String?] = [""]
     
+    
+   public var searchTerm = String()
   var storedOffsets = [Int: CGFloat]()
     
   fileprivate var _refHandle: DatabaseHandle?
@@ -322,19 +324,15 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     return newLength <= self.msglength.intValue // Bool
   }
 
-  // UITableViewDataSource protocol methods
+  //MARK: UITableViewDataSource protocol methods
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    
-      return UITableViewAutomaticDimension
-
-        
+          return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         guard let tableViewCell = cell as? StackTableViewCell else { return }
-        
         tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
         tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
     }
@@ -349,11 +347,16 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     let cell : ChatTableViewCell = self.clientTable .dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath) as! ChatTableViewCell
     
-
     // Unpack message from Firebase DataSnapshot
     let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
     guard let message = messageSnapshot.value as? [String:String] else { return cell }
     //try
+
+    if (message["SearchTerm"] != nil) {
+        
+        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
+        return self.cell
+    }
 
     
     let name = message[Constants.MessageFields.name] ?? ""
@@ -367,27 +370,17 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             return
           }
           DispatchQueue.main.async {
-            //cell.imageView?.image = UIImage.init(data: data!)
+            
             cell.imgUserImage.image = UIImage.init(data: data!)
             cell.setNeedsLayout()
           }
         }
       } else if let URL = URL(string: imageURL), let data = try? Data(contentsOf: URL) {
-       // cell.imageView?.image = UIImage.init(data: data)
+    
         cell.imgUserImage.image = UIImage.init(data: data)
       }
-    //  cell.textLabel?.text = "sent by: \(name)"
         cell.lblChatText.text = "sent by: \(name)"
     }
-//    else if  message[Constants.MessageFields.parameters] != nil {
-//        
-//    
-//        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
-//        
-//        return self.cell
-//        
-//        }
-        
     else {
     
         //API.AI bot  response
@@ -410,9 +403,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
             if let photoURL = message[Constants.MessageFields.photoURL], let URL = URL(string: photoURL),
                 let data = try? Data(contentsOf: URL) {
-              //  cell.imageView?.image = UIImage(data: data)
+            
                 cell.imgUserImage.image = UIImage(data: data)
-                cell.imgUserImage.layer.cornerRadius = 10.0
                 cell.imgUserImage.layer.cornerRadius = cell.imgUserImage.frame.size.width/2
                 cell.imgUserImage.clipsToBounds = true
             
@@ -498,7 +490,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
         textRequest.setCompletionBlockSuccess({ (request, response) -> Void in
             if let responseReceived = response {
-
                 
         let responseDic = responseReceived as! NSDictionary
         var id: NSDictionary
@@ -506,8 +497,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
             let responseFulfillment : NSDictionary! = id.value(forKey: "fulfillment") as! NSDictionary
             let responseSpeech  = responseFulfillment.value(forKey: "speech") as! String
-           // print(responseSpeech)
-                
+         
                 let st = "0"
             //MARK:TODO
                 if st == "1" {
@@ -519,14 +509,13 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                 let metaData : NSDictionary! = id.value(forKey: "metadata") as! NSDictionary
                 _ = metaData.value(forKey:"intentName") ?? ""
                 
-               
-                requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
+             /*   requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
                 
                 //Auth.auth().currentUser?.displayName
                 // Push data to Firebase Database
                 self.ref.child("messages").childByAutoId().setValue(requestToPass)
                 //Parameters to pass as array
-                
+             */
                 let parameters : NSDictionary? = id.value(forKey: "parameters") as? NSDictionary
                 
                 if parameters != nil                {
@@ -546,12 +535,16 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                             print(stringValues)
                             self.listOfOptions = (symptomList?.components(separatedBy: ","))!
                         
+                             requestToPass["OptionsList"] = stringValues
+                            
                         }
                         else if(parameters?.value(forKey: "SymptomList") is NSString){
                             
                             let efs : NSString = (parameters?.value(forKey:"SymptomList") as? NSString)!
                             self.multipleOptionvalue = efs.components(separatedBy: ",")
                             self.listOfOptions = self.multipleOptionvalue
+                            
+                             requestToPass["OptionsList"] = efs
 
                         }
                             
@@ -575,6 +568,9 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         self.btnNoneOfThese.isHidden = false
                         self.btnNoneOfThese.setTitle("None of these", for: UIControlState.normal)
                  
+                        
+                       
+
                     }
                     else if parameters?.value(forKey:"SingleOptionList") != nil {
                         
@@ -593,6 +589,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                             
                         }
                         
+                        
                         self.view.endEditing(true)
                         self.consBottomOptions.constant = -100.0
                         self.textField.isHidden = true
@@ -601,12 +598,33 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         self.sendButton.isHidden =  true
                         self.btnNoneOfThese.isHidden = true
                         
+                        requestToPass["SingleOptionList"] = SingleOptionList
+
+                    }
+                    
+                    else if parameters?.value(forKey: "SearchTerm") != nil{
+                        
+                       self.searchTerm = parameters?.value(forKey: "SearchTerm") as! String
+                        
+                        requestToPass["SearchTerm"] = self.searchTerm
+
+                        
                     }
                   }
+                
                 }
-                else{
+                else{ // if parameter == nil
                       self.hideOptionView()
                 }
+                
+                requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
+                
+                //Auth.auth().currentUser?.displayName
+                // Push data to Firebase Database
+                self.ref.child("messages").childByAutoId().setValue(requestToPass)
+                
+                
+                
                 
                 //Custom payload
 //           let messages  = responseFulfillment.value(forKey: "messages") as! Array<Any>
@@ -850,9 +868,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   }
 
   //MARK: Button Actions
-    
-    
-    
+   
     @IBAction func btnSendAllOptions(_ sender: Any) {
         
        hideOptionView()
@@ -967,11 +983,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             for  btn in self.buttonOptionsArray {
                 (btn as! UIButton).isSelected = false
             }
-            
-//            self.btnOptions1.isSelected = false
-//            self.btnOptions2.isSelected = false
-//            self.btnOptions3.isSelected = false
-//            self.btnOptions4.isSelected = false
+ 
         }
         
         hideOptionView()
@@ -1011,39 +1023,14 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.row == 0
-        {
              optionsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "optionsCell", for: indexPath) as! OptionsCollectionCell
-            
-            if multipleOptionsArray.count>0 {
-
-             optionsCell.btnText1.setTitle(self.listOfOptions[0] , for: UIControlState.normal)
-             optionsCell.btnText2.setTitle(self.listOfOptions[1] , for: UIControlState.normal)
-             optionsCell.btnText3.setTitle(self.listOfOptions[2] , for: UIControlState.normal)
-             optionsCell.btnText4.setTitle(self.listOfOptions[3] , for: UIControlState.normal)
-             optionsCell.btnText5.setTitle("None of these", for: UIControlState.normal)
-                
-
-            
-            }
-            return optionsCell
-            
-        }
-//        collectionCell  = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! CollectionViewCell
-//        
-//        collectionCell.btn1.setTitle("Option 1", for: UIControlState.normal)
-    
         
-//        if indexPath.row == 3
-//        {
-//            collectionCell.imgView?.isHidden = true
-//            
-//        }
-//        else{
-//             collectionCell.imgView?.isHidden = false
-//        }
-        return collectionCell
+        optionsCell.labelText.text = "Search on Patient.info to get more details on " + "\(searchTerm)"
+        
+        print(searchTerm)
+        
+    
+        return optionsCell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -1053,17 +1040,18 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
       
     }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        if collectionCell.isKind(of:OptionsCollectionCell.self)
-        {
-        return CGSize.init(width: optionsCell.frame.size.width, height: 175.0)
-        }
-        else{
-            return CGSize.init(width: collectionCell.frame.size.width, height: collectionCell.frame.size.height)
-        }
-    }
+   
     
+          // func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+//        if collectionCell.isKind(of:OptionsCollectionCell.self)
+//        {
+//        return CGSize.init(width: optionsCell.frame.size.width, height: 175.0)
+//        }
+//        else{
+//            return CGSize.init(width: collectionCell.frame.size.width, height: collectionCell.frame.size.height)
+//        }
+  //  }
     
 }
 

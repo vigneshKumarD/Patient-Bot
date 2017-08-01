@@ -9,40 +9,34 @@
 import UIKit
 
 class OptionsCollectionCell: UICollectionViewCell {
-
-    @IBOutlet weak var btnText1: UIButton!
-    @IBOutlet weak var btnText2: UIButton!
-    @IBOutlet weak var btnText3: UIButton!
-    @IBOutlet weak var btnText4: UIButton!
-    @IBOutlet weak var btnText5: UIButton!
     
+    
+    @IBOutlet weak var imgLogo: UIImageView!
+    
+    @IBOutlet weak var labelText: UILabel!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         // Initialization code
-    
+            
+        self.layer.cornerRadius = 5.0
+//        self.layer.borderWidth = 0.5
+//        self.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
+        self.layer.backgroundColor = UIColor.init(colorLiteralRed: 232.0/255.0, green: 232.0/255.0, blue: 232.0/255.0, alpha: 1.0).cgColor
         
-        self.layer.cornerRadius = 10.0
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
+        imgLogo.layer.cornerRadius = 5.0
+        imgLogo.layer.borderWidth = 0.5
+        imgLogo.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
+        imgLogo.clipsToBounds = true
         
-        btnText1.layer.cornerRadius = 5.0
-        btnText1.layer.borderWidth = 0.5
-        btnText1.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
+        labelText.layer.cornerRadius = 5.0
+        labelText.layer.borderWidth = 0.5
+        labelText.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
+        labelText.clipsToBounds = true
+
         
-        btnText2.layer.cornerRadius = 5.0
-        btnText2.layer.borderWidth = 0.5
-        btnText2.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
-        
-        btnText3.layer.cornerRadius = 5.0
-        btnText3.layer.borderWidth = 0.5
-        btnText3.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
-        
-        btnText4.layer.cornerRadius = 5.0
-        btnText4.layer.borderWidth = 0.5
-        btnText4.layer.borderColor = UIColor.init(colorLiteralRed: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0).cgColor
-        
-          }
+        }
 
     
 }

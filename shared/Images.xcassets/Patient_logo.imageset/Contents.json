@@ -10,11 +10,15 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "Patient_Logo.jpg",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
+  },
+  "properties" : {
+    "template-rendering-intent" : "original"
   }
 }
