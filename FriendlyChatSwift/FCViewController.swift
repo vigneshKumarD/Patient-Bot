@@ -5,13 +5,13 @@
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
 //
-//  http://www.apache.org/licenses/LICENSE-2.0
+//  http://www.apache.org/licvares/LICENSE-2.0
 //
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
-//  limitations under the License.
+//  varitations under the License.
 //
 
 import Photos
@@ -62,6 +62,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     @IBOutlet weak var btnSendAllOptions: UIButton!
     var buttonOptionsArray = NSMutableArray()
    var optionsSelectedArray = NSMutableArray()
+    var isVoiceEnabled = Bool()
     
     
   var ref: DatabaseReference!
@@ -77,6 +78,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     
    public var searchTerm = String()
+   public var delegateObj: ClassBVCDelegate!
   var storedOffsets = [Int: CGFloat]()
     
   fileprivate var _refHandle: DatabaseHandle?
@@ -86,7 +88,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   var bottomoffset :CGPoint!
     //Speech
     
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-IN"))!
     
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -178,12 +180,14 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
   func configureDatabase() {
     ref = Database.database().reference()
+    
     // Listen for new messages in the Firebase database
     _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
       guard let strongSelf = self else { return }
       strongSelf.messages.append(snapshot)
-      strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
-        
+    
+      strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 1)], with: .automatic)
+    
         if (self?.clientTable.contentSize.height)!+30 > (self?.clientTable.bounds.size.height)!
         {
             
@@ -326,6 +330,10 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
   //MARK: UITableViewDataSource protocol methods
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 2;
+    }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
           return UITableViewAutomaticDimension
     }
@@ -338,7 +346,13 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return messages.count
+    if section == 0 {
+        
+        return 1
+    }
+    else{
+       return messages.count
+    }
   }
 
     
@@ -347,21 +361,42 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     let cell : ChatTableViewCell = self.clientTable .dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath) as! ChatTableViewCell
     
+   
+
+        if (indexPath.section == 0 && indexPath.row == 0){
+        
+        cell.lblChatText.text = "Hi there"
+        cell.lblChatText.textColor = UIColor.black
+        cell.lblChatText.textAlignment = NSTextAlignment.right
+        cell.imgUserImage.image = #imageLiteral(resourceName: "bot")
+        cell.lblChatText.backgroundColor = UIColor.white
+        
+        cell.lblChatText.layer.cornerRadius = 10.0
+        cell.lblChatText.clipsToBounds = true
+        return cell
+    }
+    
+    // Unpack message from Firebase DataSnapshot
     // Unpack message from Firebase DataSnapshot
     let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
     guard let message = messageSnapshot.value as? [String:String] else { return cell }
-    //try
 
     if (message["SearchTerm"] != nil) {
         
-        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
-        return self.cell
-    }
+        cell.lblChatText.text = searchTerm
+        cell.lblChatText.textColor = UIColor.blue
+        cell.lblChatText.textAlignment = NSTextAlignment.right
+        cell.imgUserImage.image = #imageLiteral(resourceName: "bot")
+        cell.lblChatText.backgroundColor = UIColor.white
+        
+        cell.lblChatText.layer.cornerRadius = 10.0
+        cell.lblChatText.clipsToBounds = true
+        return cell
 
-    
+//        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
+//        return self.cell
+    }
     let name = message[Constants.MessageFields.name] ?? ""
-    
-    
     if let imageURL = message[Constants.MessageFields.imageURL] {
       if imageURL.hasPrefix("gs://") {
         Storage.storage().reference(forURL: imageURL).getData(maxSize: INT64_MAX) {(data, error) in
@@ -390,11 +425,11 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         cell.lblChatText.text = "\(textSpeech ) "
         cell.lblChatText.textColor = UIColor.black
         cell.lblChatText.textAlignment = NSTextAlignment.right
-        cell.imgUserImage.image = nil
+        cell.imgUserImage.image = #imageLiteral(resourceName: "bot")
         cell.lblChatText.backgroundColor = UIColor.white
         }
-        else{
-        
+        else
+      {
         cell.lblChatText.text = " \(text)"
         cell.lblChatText.textColor = UIColor.black
         cell.lblChatText.textAlignment = NSTextAlignment.left
@@ -403,15 +438,11 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
             if let photoURL = message[Constants.MessageFields.photoURL], let URL = URL(string: photoURL),
                 let data = try? Data(contentsOf: URL) {
-            
                 cell.imgUserImage.image = UIImage(data: data)
                 cell.imgUserImage.layer.cornerRadius = cell.imgUserImage.frame.size.width/2
                 cell.imgUserImage.clipsToBounds = true
-            
-            }
-
+                }
         }
-        
         cell.lblChatText.layer.cornerRadius = 10.0
         cell.lblChatText.clipsToBounds = true
         
@@ -420,7 +451,16 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
 
   }
+    
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let webViewController = PatientWebView()
+        webViewController.searchText = "Xerostomia" // searchTerm
+        self.performSegue(withIdentifier: "toWebview", sender: webViewController.searchText)
+        
+        
+    }
   // UITextViewDelegate protocol methods
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     guard textField.text != nil else { return true }
@@ -498,9 +538,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             let responseFulfillment : NSDictionary! = id.value(forKey: "fulfillment") as! NSDictionary
             let responseSpeech  = responseFulfillment.value(forKey: "speech") as! String
          
-                let st = "0"
-            //MARK:TODO
-                if st == "1" {
+               if self.isVoiceEnabled {
                     
                     self.narrateTheText(text: responseSpeech)
                 }
@@ -567,10 +605,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         self.btnSendOptions.isHidden =  false
                         self.btnNoneOfThese.isHidden = false
                         self.btnNoneOfThese.setTitle("None of these", for: UIControlState.normal)
-                 
-                        
-                       
-
+                
                     }
                     else if parameters?.value(forKey:"SingleOptionList") != nil {
                         
@@ -617,7 +652,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                       self.hideOptionView()
                 }
                 
-                requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
+                requestToPass[Constants.MessageFields.name] = "Bot"
                 
                 //Auth.auth().currentUser?.displayName
                 // Push data to Firebase Database
@@ -690,21 +725,24 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
         if self.audioEngine.isRunning {
             
+            isVoiceEnabled = false
             self.audioEngine.stop()
             recognitionRequest?.endAudio()
             btnVoice.isEnabled = false
-           
+           btnVoice.setBackgroundImage(#imageLiteral(resourceName: "mic_Off"), for: UIControlState.normal)
+            
             btnVoice.isHidden = false
             print("NOT listening......")
            // btnVoice.setTitle("Start Recording", for: .normal)
         }
         else {
             
+            isVoiceEnabled = true
             startRecording()
+            btnVoice.setBackgroundImage(#imageLiteral(resourceName: "mic_On"), for: UIControlState.normal)
             print("listening......")
           
         }
-        
     }
     
 
@@ -735,7 +773,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
         } //5
         
-        recognitionRequest.shouldReportPartialResults = true
+        recognitionRequest.shouldReportPartialResults = false
         //6]
        
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in  //7
@@ -914,10 +952,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                 hideOptionView()
                 let data = [Constants.MessageFields.text: self.singleListOptions[0]]
                 sendMessage(withData: data as! [String : String] )
-            
-        }
-        
-    }
+            }
+     }
         
   
     
@@ -928,7 +964,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
              sender.isSelected = true
         }
         else if (self.listOfOptions.count > 0 && sender.isSelected == true){ //Single Options YES/NO
-            
             optionsSelectedArray.remove(self.listOfOptions[1]!)
              sender.isSelected = false
             
@@ -1004,12 +1039,40 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     func hideOptionView()
     {
-        
         self.constHBottomLayout.constant = 70.0
         self.consBottomOptions.constant = -200.0
         self.textField.isHidden = false
         self.sendButton.isHidden = false
     }
+    
+//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        
+//        if(segue.identifier == "toWebview") {
+//            
+//            let yourNextViewController = (segue.destination as! PatientWebView)
+//            yourNextViewController.searchText = "Xerostomia"
+//            
+//        }
+//        
+  //  }
+    
+//    func sendDataToVC(_ value: String!) {
+//        
+//        let webViewController = PatientWebView()
+//        webViewController.searchText = "Xerostomia" // searchTerm
+//        self.performSegue(withIdentifier: "toWebview", sender: nil)
+//
+//        
+//    }
+    
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toWebview" {
+            if let colorViewController = segue.destination as? PatientWebView {
+                colorViewController.searchText = sender as? String
+            }
+        }
+    }
+
 }
 
 
@@ -1028,13 +1091,14 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
         optionsCell.labelText.text = "Search on Patient.info to get more details on " + "\(searchTerm)"
         
         print(searchTerm)
-        
-    
         return optionsCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        let webViewController = PatientWebView()
+        webViewController.searchText = "Xerostomia" // searchTerm
+        self.performSegue(withIdentifier: "toWebview", sender: webViewController.searchText)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -1042,6 +1106,13 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
     }
    
     
+    
+    }
+
+protocol ClassBVCDelegate: class {
+    
+    func sendDataToVC(_ value: String!)
+}
           // func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
 //        if collectionCell.isKind(of:OptionsCollectionCell.self)
@@ -1053,6 +1124,6 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
 //        }
   //  }
     
-}
+
 
 
