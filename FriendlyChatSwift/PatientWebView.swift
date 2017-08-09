@@ -16,7 +16,8 @@ class PatientWebView: UIViewController {
         super.viewDidLoad()
         print(searchText)
         
-        let st : NSString! = NSString.init(string: "https://patient.info/search.asp?searchterm=\(searchText)&searchcoll=All")
+        let st : NSString! = NSString.init(string: "https://patient.info/search.asp?searchterm=\(searchText!)&searchcoll=All")
+        
         let patientUrl : URL = URL.init(string: st as String)!
         
         webview.loadRequest(URLRequest(url: patientUrl))

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5F5A53781ADE67D500F81DF0"
-               BuildableName = "Patient Triage.app"
-               BlueprintName = "Patient Triage"
-               ReferencedContainer = "container:Patient Triage.xcodeproj">
+               BuildableName = "Patient Bot.app"
+               BlueprintName = "Patient Bot"
+               ReferencedContainer = "container:Patient Bot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F5A53781ADE67D500F81DF0"
-            BuildableName = "Patient Triage.app"
-            BlueprintName = "Patient Triage"
-            ReferencedContainer = "container:Patient Triage.xcodeproj">
+            BuildableName = "Patient Bot.app"
+            BlueprintName = "Patient Bot"
+            ReferencedContainer = "container:Patient Bot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F5A53781ADE67D500F81DF0"
-            BuildableName = "Patient Triage.app"
-            BlueprintName = "Patient Triage"
-            ReferencedContainer = "container:Patient Triage.xcodeproj">
+            BuildableName = "Patient Bot.app"
+            BlueprintName = "Patient Bot"
+            ReferencedContainer = "container:Patient Bot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F5A53781ADE67D500F81DF0"
-            BuildableName = "Patient Triage.app"
-            BlueprintName = "Patient Triage"
-            ReferencedContainer = "container:Patient Triage.xcodeproj">
+            BuildableName = "Patient Bot.app"
+            BlueprintName = "Patient Bot"
+            ReferencedContainer = "container:Patient Bot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

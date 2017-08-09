@@ -102,11 +102,13 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     super.viewDidLoad()
 
     
+    self.hideOptionView()
     buttonOptionsArray = [self.btnOptions1,self.btnOptions2,self.btnOptions3,self.btnOptions4]
     headerView.layer.shadowColor = UIColor.lightGray.cgColor
     clientTable.rowHeight = UITableViewAutomaticDimension
    
-    clientTable.allowsSelection = false
+
+    clientTable.allowsSelection = true
     configureDatabase()
     configureStorage()
     configureRemoteConfig()
@@ -338,6 +340,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
           return UITableViewAutomaticDimension
     }
     
+    
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         guard let tableViewCell = cell as? StackTableViewCell else { return }
@@ -361,38 +365,35 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     let cell : ChatTableViewCell = self.clientTable .dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath) as! ChatTableViewCell
     
-   
-
         if (indexPath.section == 0 && indexPath.row == 0){
-        
-        cell.lblChatText.text = "Hi there"
-        cell.lblChatText.textColor = UIColor.black
-        cell.lblChatText.textAlignment = NSTextAlignment.right
-        cell.imgUserImage.image = #imageLiteral(resourceName: "bot")
-        cell.lblChatText.backgroundColor = UIColor.white
-        
-        cell.lblChatText.layer.cornerRadius = 10.0
-        cell.lblChatText.clipsToBounds = true
-        return cell
+            cell.lblChatText.text = "Hi there"
+        return self.frameBotUI(cell)
     }
     
-    // Unpack message from Firebase DataSnapshot
+
     // Unpack message from Firebase DataSnapshot
     let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
     guard let message = messageSnapshot.value as? [String:String] else { return cell }
 
     if (message["SearchTerm"] != nil) {
         
-        cell.lblChatText.text = searchTerm
-        cell.lblChatText.textColor = UIColor.blue
-        cell.lblChatText.textAlignment = NSTextAlignment.right
-        cell.imgUserImage.image = #imageLiteral(resourceName: "bot")
-        cell.lblChatText.backgroundColor = UIColor.white
         
-        cell.lblChatText.layer.cornerRadius = 10.0
-        cell.lblChatText.clipsToBounds = true
+         let cell : SerachTermCell = self.clientTable .dequeueReusableCell(withIdentifier: "searchTermCell", for: indexPath) as! SerachTermCell
+        
+        cell.lbltext.textAlignment = NSTextAlignment.left
+        cell.lbltext.text = "\nIt might be \(String(describing: message["SearchTerm"]!)) find more  on Patient.Info "
+        cell.imgBotImage.image = #imageLiteral(resourceName: "bot")
+        cell.lbltext.backgroundColor = UIColor.white
+        cell.imgPatient.image = #imageLiteral(resourceName: "Patient_logo")
+       
+        cell.imgPatient.layer.cornerRadius = 10.0
+        cell.imgPatient.clipsToBounds = true
+        
+        cell.lbltext.layer.cornerRadius = 10.0
+        cell.lbltext.clipsToBounds = true
+        
         return cell
-
+        
 //        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
 //        return self.cell
     }
@@ -423,24 +424,25 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
       if let textSpeech = message[Constants.MessageFields.speech] {
         
         cell.lblChatText.text = "\(textSpeech ) "
-        cell.lblChatText.textColor = UIColor.black
-        cell.lblChatText.textAlignment = NSTextAlignment.right
-        cell.imgUserImage.image = #imageLiteral(resourceName: "bot")
-        cell.lblChatText.backgroundColor = UIColor.white
+        
+        return self.frameBotUI(cell)
         }
         else
       {
         cell.lblChatText.text = " \(text)"
         cell.lblChatText.textColor = UIColor.black
-        cell.lblChatText.textAlignment = NSTextAlignment.left
+        cell.lblChatText.textAlignment = NSTextAlignment.right
          cell.lblChatText.backgroundColor = UIColor.init(colorLiteralRed: 197.0/255.0, green: 224.0/255.0, blue: 159.0/255.0, alpha: 1.0)
         cell.imgUserImage.image = UIImage(named: "ic_account_circle")
+        cell.imgBotImage.image = nil
 
             if let photoURL = message[Constants.MessageFields.photoURL], let URL = URL(string: photoURL),
                 let data = try? Data(contentsOf: URL) {
                 cell.imgUserImage.image = UIImage(data: data)
                 cell.imgUserImage.layer.cornerRadius = cell.imgUserImage.frame.size.width/2
                 cell.imgUserImage.clipsToBounds = true
+                cell.layoutHideBot.constant = 20.0
+                cell.layoutHideUser.constant = 60.0
                 }
         }
         cell.lblChatText.layer.cornerRadius = 10.0
@@ -452,15 +454,48 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
   }
     
+    func frameBotUI(_ cell : ChatTableViewCell) -> ChatTableViewCell {
+        
+        cell.lblChatText.textColor = UIColor.black
+        cell.lblChatText.sizeToFit()
+        cell.lblChatText.adjustsFontSizeToFitWidth = true
+        cell.lblChatText.textAlignment = NSTextAlignment.left
+        cell.imgBotImage.image = #imageLiteral(resourceName: "bot")
+        cell.imgUserImage.image = nil
+        cell.layoutHideUser.constant = 20.0
+        cell.layoutHideBot.constant = 63.0
+        cell.lblChatText.backgroundColor = UIColor.white
+        
+        cell.lblChatText.layer.cornerRadius = 10.0
+        cell.lblChatText.clipsToBounds = true
+        
+        return cell
+    }
+    
+   
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+        let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
+        guard let message = messageSnapshot.value as? [String:String] else { return  }
         
-        let webViewController = PatientWebView()
-        webViewController.searchText = "Xerostomia" // searchTerm
-        self.performSegue(withIdentifier: "toWebview", sender: webViewController.searchText)
+        let val : String! = message["SearchTerm"]
         
+        if val != nil {
+            let secondview = self.storyboard?.instantiateViewController(withIdentifier: "PatientWebView") as! PatientWebView
+            secondview.searchText = val
+            
+            self.present(secondview, animated: false, completion: nil)
+            
+        }
+
+      
+    
+
         
     }
+    
+    
   // UITextViewDelegate protocol methods
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     guard textField.text != nil else { return true }
@@ -626,7 +661,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         
                         
                         self.view.endEditing(true)
-                        self.consBottomOptions.constant = -100.0
+                        self.consBottomOptions.constant = -110.0
                         self.textField.isHidden = true
                                               
                         self.btnSendOptions.isHidden = true
@@ -1096,6 +1131,8 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
+        
+        let val = messages[indexPath.row]
         let webViewController = PatientWebView()
         webViewController.searchText = "Xerostomia" // searchTerm
         self.performSegue(withIdentifier: "toWebview", sender: webViewController.searchText)

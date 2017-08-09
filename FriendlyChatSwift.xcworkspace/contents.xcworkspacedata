@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/Patient Triage.xcodeproj">
+      location = "group:/Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/Patient Bot.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

@@ -12,6 +12,12 @@ class ChatTableViewCell: UITableViewCell {
 
     @IBOutlet weak var imgUserImage: UIImageView!
     @IBOutlet weak var lblChatText: UILabel!
+    
+    
+    @IBOutlet weak var layoutHideBot: NSLayoutConstraint!
+    @IBOutlet weak var layoutHideUser: NSLayoutConstraint!
+    @IBOutlet weak var imgBotImage: UIImageView!
+    
     @IBOutlet weak var layoutImageW: NSLayoutConstraint!
     @IBOutlet weak var layoutTrailingText: NSLayoutConstraint!
     @IBOutlet weak var layoutLeadingText: NSLayoutConstraint!
