@@ -46,3 +46,34 @@ override func drawText(in rect: CGRect) {
     super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
     }
 }
+
+//extension CALayer {
+//    
+//    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+//        
+//        let border = CALayer()
+//        
+//        switch edge {
+//        case UIRectEdge.top:
+//            border.frame = CGRect.init(x: 0, y: 0, width: self.frame.height, height: thickness)
+//            break
+//        case UIRectEdge.bottom:
+//            border.frame = CGRect.init(x: 0, y: self.frame.height - thickness, width:  UIScreen.main.bounds.width, height: thickness)
+//            break
+//        case UIRectEdge.left:
+//            border.frame = CGRect.init(x: 0, y: 0, width:thickness, height: self.frame.height)
+//            break
+//        case UIRectEdge.right:
+//            border.frame = CGRect.init(x: self.frame.height - thickness, y: 0, width:thickness, height: self.frame.height)
+//            break
+//        default:
+//            break
+//        }
+//        
+//        border.backgroundColor = color.cgColor;
+//        
+//        self.addSublayer(border)
+//    }
+
+//}
+

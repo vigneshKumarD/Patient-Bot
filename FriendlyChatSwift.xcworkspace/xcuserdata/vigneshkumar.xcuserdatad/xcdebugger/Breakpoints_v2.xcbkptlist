@@ -10,13 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "523188891.653698"
+            timestampString = "523942968.775411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "1169"
+            endingLineNumber = "1169">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,43 +24,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "523188891.653698"
+            timestampString = "523942968.775411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
+            landmarkName = "requestForApiAi(dataValue:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "523188891.653698"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "523190237.195681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1075"
-            endingLineNumber = "1075">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -72,12 +40,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "523189836.758842"
+            timestampString = "523942968.775411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
-            landmarkName = "btnVoicePressed(_:)"
+            startingLineNumber = "1083"
+            endingLineNumber = "1083"
+            landmarkName = "FCViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FriendlyChatSwift/FCViewController.swift"
+            timestampString = "523942968.775411"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1103"
+            endingLineNumber = "1103"
+            landmarkName = "prepareForSegue(segue:sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -88,12 +72,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "523188891.653698"
+            timestampString = "523942968.775411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
-            landmarkName = "buttonAction(sender:)"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "configureDatabase()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

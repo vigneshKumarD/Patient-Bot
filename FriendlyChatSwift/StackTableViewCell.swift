@@ -20,7 +20,7 @@ class StackTableViewCell: UITableViewCell {
 //        collectionView.layer.cornerRadius = 10.0
 //        collectionView.layer.borderWidth = 1.0
 //        collectionView.layer.borderColor = UIColor.gray.cgColor
-        
+        self.layer.backgroundColor = UIColor.init(colorLiteralRed: 232.0/255.0, green: 232.0/255.0, blue: 232.0/255.0, alpha: 1.0).cgColor
         collectionView.register(UINib.init(nibName: "OptionsCollectionCell", bundle: nil), forCellWithReuseIdentifier: "optionsCell")
         
         
@@ -49,6 +49,8 @@ class StackTableViewCell: UITableViewCell {
             set { collectionView.contentOffset.x = newValue }
             get { return collectionView.contentOffset.x }
         }
+        
+        
     }
 
 

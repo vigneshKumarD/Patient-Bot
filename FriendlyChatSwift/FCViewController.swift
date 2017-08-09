@@ -5,13 +5,13 @@
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
 //
-//  http://www.apache.org/licenses/LICENSE-2.0
+//  http://www.apache.org/licvares/LICENSE-2.0
 //
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
-//  limitations under the License.
+//  varitations under the License.
 //
 
 import Photos
@@ -62,6 +62,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     @IBOutlet weak var btnSendAllOptions: UIButton!
     var buttonOptionsArray = NSMutableArray()
    var optionsSelectedArray = NSMutableArray()
+    var isVoiceEnabled = Bool()
     
     
   var ref: DatabaseReference!
@@ -73,8 +74,11 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   var multipleOptionsArray = NSArray()
     var multipleOptionvalue : [String] = [""]
     var listOfOptions  : [String?] = [""]
-     var singleListOptions  : [String?] = [""]
+    var singleListOptions  : [String?] = [""]
     
+    
+   public var searchTerm = String()
+   public var delegateObj: ClassBVCDelegate!
   var storedOffsets = [Int: CGFloat]()
     
   fileprivate var _refHandle: DatabaseHandle?
@@ -84,7 +88,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   var bottomoffset :CGPoint!
     //Speech
     
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-IN"))!
     
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -98,11 +102,13 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     super.viewDidLoad()
 
     
+    self.hideOptionView()
     buttonOptionsArray = [self.btnOptions1,self.btnOptions2,self.btnOptions3,self.btnOptions4]
     headerView.layer.shadowColor = UIColor.lightGray.cgColor
     clientTable.rowHeight = UITableViewAutomaticDimension
    
-    clientTable.allowsSelection = false
+
+    clientTable.allowsSelection = true
     configureDatabase()
     configureStorage()
     configureRemoteConfig()
@@ -176,12 +182,14 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
   func configureDatabase() {
     ref = Database.database().reference()
+    
     // Listen for new messages in the Firebase database
     _refHandle = self.ref.child("messages").observe(.childAdded, with: { [weak self] (snapshot) -> Void in
       guard let strongSelf = self else { return }
       strongSelf.messages.append(snapshot)
-      strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 0)], with: .automatic)
-        
+    
+      strongSelf.clientTable.insertRows(at: [IndexPath(row: strongSelf.messages.count-1, section: 1)], with: .automatic)
+    
         if (self?.clientTable.contentSize.height)!+30 > (self?.clientTable.bounds.size.height)!
         {
             
@@ -322,25 +330,33 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     return newLength <= self.msglength.intValue // Bool
   }
 
-  // UITableViewDataSource protocol methods
+  //MARK: UITableViewDataSource protocol methods
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    
-      return UITableViewAutomaticDimension
-
+    func numberOfSections(in tableView: UITableView) -> Int {
         
+        return 2;
     }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+          return UITableViewAutomaticDimension
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         guard let tableViewCell = cell as? StackTableViewCell else { return }
-        
         tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
         tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
     }
     
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return messages.count
+    if section == 0 {
+        
+        return 1
+    }
+    else{
+       return messages.count
+    }
   }
 
     
@@ -349,16 +365,39 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     let cell : ChatTableViewCell = self.clientTable .dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath) as! ChatTableViewCell
     
+        if (indexPath.section == 0 && indexPath.row == 0){
+            cell.lblChatText.text = "Hi there"
+        return self.frameBotUI(cell)
+    }
+    
 
     // Unpack message from Firebase DataSnapshot
     let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
     guard let message = messageSnapshot.value as? [String:String] else { return cell }
-    //try
 
-    
+    if (message["SearchTerm"] != nil) {
+        
+        
+         let cell : SerachTermCell = self.clientTable .dequeueReusableCell(withIdentifier: "searchTermCell", for: indexPath) as! SerachTermCell
+        
+        cell.lbltext.textAlignment = NSTextAlignment.left
+        cell.lbltext.text = "\nIt might be \(String(describing: message["SearchTerm"]!)) find more  on Patient.Info "
+        cell.imgBotImage.image = #imageLiteral(resourceName: "bot")
+        cell.lbltext.backgroundColor = UIColor.white
+        cell.imgPatient.image = #imageLiteral(resourceName: "Patient_logo")
+       
+        cell.imgPatient.layer.cornerRadius = 10.0
+        cell.imgPatient.clipsToBounds = true
+        
+        cell.lbltext.layer.cornerRadius = 10.0
+        cell.lbltext.clipsToBounds = true
+        
+        return cell
+        
+//        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
+//        return self.cell
+    }
     let name = message[Constants.MessageFields.name] ?? ""
-    
-    
     if let imageURL = message[Constants.MessageFields.imageURL] {
       if imageURL.hasPrefix("gs://") {
         Storage.storage().reference(forURL: imageURL).getData(maxSize: INT64_MAX) {(data, error) in
@@ -367,27 +406,17 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             return
           }
           DispatchQueue.main.async {
-            //cell.imageView?.image = UIImage.init(data: data!)
+            
             cell.imgUserImage.image = UIImage.init(data: data!)
             cell.setNeedsLayout()
           }
         }
       } else if let URL = URL(string: imageURL), let data = try? Data(contentsOf: URL) {
-       // cell.imageView?.image = UIImage.init(data: data)
+    
         cell.imgUserImage.image = UIImage.init(data: data)
       }
-    //  cell.textLabel?.text = "sent by: \(name)"
         cell.lblChatText.text = "sent by: \(name)"
     }
-//    else if  message[Constants.MessageFields.parameters] != nil {
-//        
-//    
-//        self.cell = self.clientTable.dequeueReusableCell(withIdentifier: "stackCell", for: indexPath) as! StackTableViewCell
-//        
-//        return self.cell
-//        
-//        }
-        
     else {
     
         //API.AI bot  response
@@ -395,31 +424,27 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
       if let textSpeech = message[Constants.MessageFields.speech] {
         
         cell.lblChatText.text = "\(textSpeech ) "
-        cell.lblChatText.textColor = UIColor.black
-        cell.lblChatText.textAlignment = NSTextAlignment.right
-        cell.imgUserImage.image = nil
-        cell.lblChatText.backgroundColor = UIColor.white
-        }
-        else{
         
+        return self.frameBotUI(cell)
+        }
+        else
+      {
         cell.lblChatText.text = " \(text)"
         cell.lblChatText.textColor = UIColor.black
-        cell.lblChatText.textAlignment = NSTextAlignment.left
+        cell.lblChatText.textAlignment = NSTextAlignment.right
          cell.lblChatText.backgroundColor = UIColor.init(colorLiteralRed: 197.0/255.0, green: 224.0/255.0, blue: 159.0/255.0, alpha: 1.0)
         cell.imgUserImage.image = UIImage(named: "ic_account_circle")
+        cell.imgBotImage.image = nil
 
             if let photoURL = message[Constants.MessageFields.photoURL], let URL = URL(string: photoURL),
                 let data = try? Data(contentsOf: URL) {
-              //  cell.imageView?.image = UIImage(data: data)
                 cell.imgUserImage.image = UIImage(data: data)
-                cell.imgUserImage.layer.cornerRadius = 10.0
                 cell.imgUserImage.layer.cornerRadius = cell.imgUserImage.frame.size.width/2
                 cell.imgUserImage.clipsToBounds = true
-            
-            }
-
+                cell.layoutHideBot.constant = 20.0
+                cell.layoutHideUser.constant = 60.0
+                }
         }
-        
         cell.lblChatText.layer.cornerRadius = 10.0
         cell.lblChatText.clipsToBounds = true
         
@@ -428,7 +453,49 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
 
   }
+    
+    func frameBotUI(_ cell : ChatTableViewCell) -> ChatTableViewCell {
+        
+        cell.lblChatText.textColor = UIColor.black
+        cell.lblChatText.sizeToFit()
+        cell.lblChatText.adjustsFontSizeToFitWidth = true
+        cell.lblChatText.textAlignment = NSTextAlignment.left
+        cell.imgBotImage.image = #imageLiteral(resourceName: "bot")
+        cell.imgUserImage.image = nil
+        cell.layoutHideUser.constant = 20.0
+        cell.layoutHideBot.constant = 63.0
+        cell.lblChatText.backgroundColor = UIColor.white
+        
+        cell.lblChatText.layer.cornerRadius = 10.0
+        cell.lblChatText.clipsToBounds = true
+        
+        return cell
+    }
+    
+   
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+        let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
+        guard let message = messageSnapshot.value as? [String:String] else { return  }
+        
+        let val : String! = message["SearchTerm"]
+        
+        if val != nil {
+            let secondview = self.storyboard?.instantiateViewController(withIdentifier: "PatientWebView") as! PatientWebView
+            secondview.searchText = val
+            
+            self.present(secondview, animated: false, completion: nil)
+            
+        }
+
+      
+    
+
+        
+    }
+    
+    
   // UITextViewDelegate protocol methods
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     guard textField.text != nil else { return true }
@@ -498,7 +565,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
         textRequest.setCompletionBlockSuccess({ (request, response) -> Void in
             if let responseReceived = response {
-
                 
         let responseDic = responseReceived as! NSDictionary
         var id: NSDictionary
@@ -506,11 +572,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
             let responseFulfillment : NSDictionary! = id.value(forKey: "fulfillment") as! NSDictionary
             let responseSpeech  = responseFulfillment.value(forKey: "speech") as! String
-           // print(responseSpeech)
-                
-                let st = "0"
-            //MARK:TODO
-                if st == "1" {
+         
+               if self.isVoiceEnabled {
                     
                     self.narrateTheText(text: responseSpeech)
                 }
@@ -519,14 +582,13 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                 let metaData : NSDictionary! = id.value(forKey: "metadata") as! NSDictionary
                 _ = metaData.value(forKey:"intentName") ?? ""
                 
-               
-                requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
+             /*   requestToPass[Constants.MessageFields.name] = Auth.auth().currentUser?.displayName
                 
                 //Auth.auth().currentUser?.displayName
                 // Push data to Firebase Database
                 self.ref.child("messages").childByAutoId().setValue(requestToPass)
                 //Parameters to pass as array
-                
+             */
                 let parameters : NSDictionary? = id.value(forKey: "parameters") as? NSDictionary
                 
                 if parameters != nil                {
@@ -546,12 +608,16 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                             print(stringValues)
                             self.listOfOptions = (symptomList?.components(separatedBy: ","))!
                         
+                             requestToPass["OptionsList"] = stringValues
+                            
                         }
                         else if(parameters?.value(forKey: "SymptomList") is NSString){
                             
                             let efs : NSString = (parameters?.value(forKey:"SymptomList") as? NSString)!
                             self.multipleOptionvalue = efs.components(separatedBy: ",")
                             self.listOfOptions = self.multipleOptionvalue
+                            
+                             requestToPass["OptionsList"] = efs
 
                         }
                             
@@ -574,7 +640,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                         self.btnSendOptions.isHidden =  false
                         self.btnNoneOfThese.isHidden = false
                         self.btnNoneOfThese.setTitle("None of these", for: UIControlState.normal)
-                 
+                
                     }
                     else if parameters?.value(forKey:"SingleOptionList") != nil {
                         
@@ -593,20 +659,42 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                             
                         }
                         
+                        
                         self.view.endEditing(true)
-                        self.consBottomOptions.constant = -100.0
+                        self.consBottomOptions.constant = -110.0
                         self.textField.isHidden = true
                                               
                         self.btnSendOptions.isHidden = true
                         self.sendButton.isHidden =  true
                         self.btnNoneOfThese.isHidden = true
                         
+                        requestToPass["SingleOptionList"] = SingleOptionList
+
+                    }
+                    
+                    else if parameters?.value(forKey: "SearchTerm") != nil{
+                        
+                       self.searchTerm = parameters?.value(forKey: "SearchTerm") as! String
+                        
+                        requestToPass["SearchTerm"] = self.searchTerm
+
+                        
                     }
                   }
+                
                 }
-                else{
+                else{ // if parameter == nil
                       self.hideOptionView()
                 }
+                
+                requestToPass[Constants.MessageFields.name] = "Bot"
+                
+                //Auth.auth().currentUser?.displayName
+                // Push data to Firebase Database
+                self.ref.child("messages").childByAutoId().setValue(requestToPass)
+                
+                
+                
                 
                 //Custom payload
 //           let messages  = responseFulfillment.value(forKey: "messages") as! Array<Any>
@@ -672,21 +760,24 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
         if self.audioEngine.isRunning {
             
+            isVoiceEnabled = false
             self.audioEngine.stop()
             recognitionRequest?.endAudio()
             btnVoice.isEnabled = false
-           
+           btnVoice.setBackgroundImage(#imageLiteral(resourceName: "mic_Off"), for: UIControlState.normal)
+            
             btnVoice.isHidden = false
             print("NOT listening......")
            // btnVoice.setTitle("Start Recording", for: .normal)
         }
         else {
             
+            isVoiceEnabled = true
             startRecording()
+            btnVoice.setBackgroundImage(#imageLiteral(resourceName: "mic_On"), for: UIControlState.normal)
             print("listening......")
           
         }
-        
     }
     
 
@@ -717,7 +808,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
         } //5
         
-        recognitionRequest.shouldReportPartialResults = true
+        recognitionRequest.shouldReportPartialResults = false
         //6]
        
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in  //7
@@ -850,9 +941,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
   }
 
   //MARK: Button Actions
-    
-    
-    
+   
     @IBAction func btnSendAllOptions(_ sender: Any) {
         
        hideOptionView()
@@ -898,10 +987,8 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
                 hideOptionView()
                 let data = [Constants.MessageFields.text: self.singleListOptions[0]]
                 sendMessage(withData: data as! [String : String] )
-            
-        }
-        
-    }
+            }
+     }
         
   
     
@@ -912,7 +999,6 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
              sender.isSelected = true
         }
         else if (self.listOfOptions.count > 0 && sender.isSelected == true){ //Single Options YES/NO
-            
             optionsSelectedArray.remove(self.listOfOptions[1]!)
              sender.isSelected = false
             
@@ -967,11 +1053,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             for  btn in self.buttonOptionsArray {
                 (btn as! UIButton).isSelected = false
             }
-            
-//            self.btnOptions1.isSelected = false
-//            self.btnOptions2.isSelected = false
-//            self.btnOptions3.isSelected = false
-//            self.btnOptions4.isSelected = false
+ 
         }
         
         hideOptionView()
@@ -992,12 +1074,40 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
     
     func hideOptionView()
     {
-        
         self.constHBottomLayout.constant = 70.0
         self.consBottomOptions.constant = -200.0
         self.textField.isHidden = false
         self.sendButton.isHidden = false
     }
+    
+//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        
+//        if(segue.identifier == "toWebview") {
+//            
+//            let yourNextViewController = (segue.destination as! PatientWebView)
+//            yourNextViewController.searchText = "Xerostomia"
+//            
+//        }
+//        
+  //  }
+    
+//    func sendDataToVC(_ value: String!) {
+//        
+//        let webViewController = PatientWebView()
+//        webViewController.searchText = "Xerostomia" // searchTerm
+//        self.performSegue(withIdentifier: "toWebview", sender: nil)
+//
+//        
+//    }
+    
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toWebview" {
+            if let colorViewController = segue.destination as? PatientWebView {
+                colorViewController.searchText = sender as? String
+            }
+        }
+    }
+
 }
 
 
@@ -1011,60 +1121,46 @@ extension FCViewController: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.row == 0
-        {
              optionsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "optionsCell", for: indexPath) as! OptionsCollectionCell
-            
-            if multipleOptionsArray.count>0 {
-
-             optionsCell.btnText1.setTitle(self.listOfOptions[0] , for: UIControlState.normal)
-             optionsCell.btnText2.setTitle(self.listOfOptions[1] , for: UIControlState.normal)
-             optionsCell.btnText3.setTitle(self.listOfOptions[2] , for: UIControlState.normal)
-             optionsCell.btnText4.setTitle(self.listOfOptions[3] , for: UIControlState.normal)
-             optionsCell.btnText5.setTitle("None of these", for: UIControlState.normal)
-                
-
-            
-            }
-            return optionsCell
-            
-        }
-//        collectionCell  = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! CollectionViewCell
-//        
-//        collectionCell.btn1.setTitle("Option 1", for: UIControlState.normal)
-    
         
-//        if indexPath.row == 3
-//        {
-//            collectionCell.imgView?.isHidden = true
-//            
-//        }
-//        else{
-//             collectionCell.imgView?.isHidden = false
-//        }
-        return collectionCell
+        optionsCell.labelText.text = "Search on Patient.info to get more details on " + "\(searchTerm)"
+        
+        print(searchTerm)
+        return optionsCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        
+        let val = messages[indexPath.row]
+        let webViewController = PatientWebView()
+        webViewController.searchText = "Xerostomia" // searchTerm
+        self.performSegue(withIdentifier: "toWebview", sender: webViewController.searchText)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
       
     }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        if collectionCell.isKind(of:OptionsCollectionCell.self)
-        {
-        return CGSize.init(width: optionsCell.frame.size.width, height: 175.0)
-        }
-        else{
-            return CGSize.init(width: collectionCell.frame.size.width, height: collectionCell.frame.size.height)
-        }
+   
+    
+    
     }
+
+protocol ClassBVCDelegate: class {
     
-    
+    func sendDataToVC(_ value: String!)
 }
+          // func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+//        if collectionCell.isKind(of:OptionsCollectionCell.self)
+//        {
+//        return CGSize.init(width: optionsCell.frame.size.width, height: 175.0)
+//        }
+//        else{
+//            return CGSize.init(width: collectionCell.frame.size.width, height: collectionCell.frame.size.height)
+//        }
+  //  }
+    
+
 
 

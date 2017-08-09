@@ -20,10 +20,11 @@
 		623563021F0CB3560054E939 /* OptionsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 623563001F0CB3560054E939 /* OptionsCollectionCell.xib */; };
 		623604541F0B9FCD00E220ED /* StackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623604531F0B9FCD00E220ED /* StackTableViewCell.swift */; };
 		623604561F0BA23700E220ED /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623604551F0BA23700E220ED /* CollectionViewCell.swift */; };
-		623C21481F0E14B4000C2E99 /* siri.gif in Resources */ = {isa = PBXBuildFile; fileRef = 623C21471F0E14B4000C2E99 /* siri.gif */; };
+		623631251F3AB3BC00623CB4 /* SerachTermCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623631241F3AB3BC00623CB4 /* SerachTermCell.swift */; };
 		623C214A1F0E160B000C2E99 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C21491F0E160B000C2E99 /* iOSDevCenters+GIF.swift */; };
 		6240569A1F2B35C70007A59F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 624056991F2B35C70007A59F /* GoogleService-Info.plist */; };
 		62B9B1531F051BBB004158A5 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B9B1521F051BBB004158A5 /* ChatTableViewCell.swift */; };
+		62E696FA1F308D5D00C3811F /* PatientWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E696F91F308D5D00C3811F /* PatientWebView.swift */; };
 		AAC33A856EEA889D00C00A13 /* Pods_FriendlyChatSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC5658E5991297CD59306AE /* Pods_FriendlyChatSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,17 +41,18 @@
 		2CA807BB1B21702E009AD7F2 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
 		2CC5658E5991297CD59306AE /* Pods_FriendlyChatSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendlyChatSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF37F563199E8E1635B52F8 /* Pods-FriendlyChatSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendlyChatSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FriendlyChatSwift/Pods-FriendlyChatSwift.debug.xcconfig"; sourceTree = "<group>"; };
-		5F5A53791ADE67D500F81DF0 /* Patient Triage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Patient Triage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F5A53791ADE67D500F81DF0 /* Patient Bot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Patient Bot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F5A537D1ADE67D500F81DF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F5A537F1ADE67D500F81DF0 /* FCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCViewController.swift; sourceTree = "<group>"; };
 		623562FF1F0CB3560054E939 /* OptionsCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsCollectionCell.swift; sourceTree = "<group>"; };
 		623563001F0CB3560054E939 /* OptionsCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsCollectionCell.xib; sourceTree = "<group>"; };
 		623604531F0B9FCD00E220ED /* StackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackTableViewCell.swift; sourceTree = "<group>"; };
 		623604551F0BA23700E220ED /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		623C21471F0E14B4000C2E99 /* siri.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = siri.gif; sourceTree = "<group>"; };
+		623631241F3AB3BC00623CB4 /* SerachTermCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerachTermCell.swift; sourceTree = "<group>"; };
 		623C21491F0E160B000C2E99 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
 		624056991F2B35C70007A59F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		62B9B1521F051BBB004158A5 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		62E696F91F308D5D00C3811F /* PatientWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientWebView.swift; sourceTree = "<group>"; };
 		FFF3FBF7AF51E6CFBF6E2D66 /* Pods-FriendlyChatSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendlyChatSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-FriendlyChatSwift/Pods-FriendlyChatSwift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +75,6 @@
 				10AF4CB01DD236DE0096D192 /* Bladefile */,
 				10AF4CB11DD236DE0096D192 /* Images.xcassets */,
 				10AF4CB21DD236DE0096D192 /* LaunchScreen.xib */,
-				623C21471F0E14B4000C2E99 /* siri.gif */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -108,7 +109,7 @@
 		5F5A534D1ADE670C00F81DF0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5F5A53791ADE67D500F81DF0 /* Patient Triage.app */,
+				5F5A53791ADE67D500F81DF0 /* Patient Bot.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,7 +126,9 @@
 				623604531F0B9FCD00E220ED /* StackTableViewCell.swift */,
 				623604551F0BA23700E220ED /* CollectionViewCell.swift */,
 				2C595F041B34B73A00355AE7 /* Constants.swift */,
+				62E696F91F308D5D00C3811F /* PatientWebView.swift */,
 				623C21491F0E160B000C2E99 /* iOSDevCenters+GIF.swift */,
+				623631241F3AB3BC00623CB4 /* SerachTermCell.swift */,
 				5F5A537B1ADE67D500F81DF0 /* Supporting Files */,
 			);
 			path = FriendlyChatSwift;
@@ -155,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5F5A53781ADE67D500F81DF0 /* Patient Triage */ = {
+		5F5A53781ADE67D500F81DF0 /* Patient Bot */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5F5A53991ADE67D500F81DF0 /* Build configuration list for PBXNativeTarget "Patient Triage" */;
+			buildConfigurationList = 5F5A53991ADE67D500F81DF0 /* Build configuration list for PBXNativeTarget "Patient Bot" */;
 			buildPhases = (
 				31D76474306F8BDB7082FE90 /* [CP] Check Pods Manifest.lock */,
 				5F5A53751ADE67D500F81DF0 /* Sources */,
@@ -170,9 +173,9 @@
 			);
 			dependencies = (
 			);
-			name = "Patient Triage";
+			name = "Patient Bot";
 			productName = FriendlyPingSwift;
-			productReference = 5F5A53791ADE67D500F81DF0 /* Patient Triage.app */;
+			productReference = 5F5A53791ADE67D500F81DF0 /* Patient Bot.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -201,7 +204,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5F5A53471ADE670C00F81DF0 /* Build configuration list for PBXProject "Patient Triage" */;
+			buildConfigurationList = 5F5A53471ADE670C00F81DF0 /* Build configuration list for PBXProject "Patient Bot" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -214,7 +217,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5F5A53781ADE67D500F81DF0 /* Patient Triage */,
+				5F5A53781ADE67D500F81DF0 /* Patient Bot */,
 			);
 		};
 /* End PBXProject section */
@@ -228,7 +231,6 @@
 				10AF4CB41DD236DE0096D192 /* Bladefile in Resources */,
 				623563021F0CB3560054E939 /* OptionsCollectionCell.xib in Resources */,
 				10AF4CB51DD236DE0096D192 /* Images.xcassets in Resources */,
-				623C21481F0E14B4000C2E99 /* siri.gif in Resources */,
 				107960731C612531003DB6CC /* Main.storyboard in Resources */,
 				6240569A1F2B35C70007A59F /* GoogleService-Info.plist in Resources */,
 			);
@@ -290,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C8E6C2B1B16875B0073CE3D /* SignInViewController.swift in Sources */,
+				62E696FA1F308D5D00C3811F /* PatientWebView.swift in Sources */,
 				5F5A53801ADE67D500F81DF0 /* FCViewController.swift in Sources */,
 				623C214A1F0E160B000C2E99 /* iOSDevCenters+GIF.swift in Sources */,
 				623604561F0BA23700E220ED /* CollectionViewCell.swift in Sources */,
@@ -297,6 +300,7 @@
 				623563011F0CB3560054E939 /* OptionsCollectionCell.swift in Sources */,
 				62B9B1531F051BBB004158A5 /* ChatTableViewCell.swift in Sources */,
 				623604541F0B9FCD00E220ED /* StackTableViewCell.swift in Sources */,
+				623631251F3AB3BC00623CB4 /* SerachTermCell.swift in Sources */,
 				2CA807BC1B21702E009AD7F2 /* MeasurementHelper.swift in Sources */,
 				2C595F061B34B73A00355AE7 /* Constants.swift in Sources */,
 			);
@@ -421,7 +425,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.patientTriage;
-				PRODUCT_NAME = "Patient Triage";
+				PRODUCT_NAME = "Patient Bot";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
@@ -443,7 +447,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.patientTriage;
-				PRODUCT_NAME = "Patient Triage";
+				PRODUCT_NAME = "Patient Bot";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
@@ -454,7 +458,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5F5A53471ADE670C00F81DF0 /* Build configuration list for PBXProject "Patient Triage" */ = {
+		5F5A53471ADE670C00F81DF0 /* Build configuration list for PBXProject "Patient Bot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5F5A536D1ADE670C00F81DF0 /* Debug */,
@@ -463,7 +467,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5F5A53991ADE67D500F81DF0 /* Build configuration list for PBXNativeTarget "Patient Triage" */ = {
+		5F5A53991ADE67D500F81DF0 /* Build configuration list for PBXNativeTarget "Patient Bot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5F5A53951ADE67D500F81DF0 /* Debug */,
