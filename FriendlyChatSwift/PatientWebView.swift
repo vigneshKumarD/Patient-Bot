@@ -8,19 +8,28 @@
 
 import UIKit
 
+
+extension String {
+    var condensedWhitespace: String {
+        let components = self.components(separatedBy: NSCharacterSet.whitespacesAndNewlines)
+        return components.filter { !$0.isEmpty }.joined(separator: "")
+    }
+}
+
 class PatientWebView: UIViewController {
 
     @IBOutlet weak var webview: UIWebView!
-   public var searchText : String!
+   public var searchText = String()
     override func viewDidLoad() {
         super.viewDidLoad()
         print(searchText)
+        let strng   = "https://patient.info/search.asp?searchterm=\(searchText)&searchcoll=All"
+      
+        let  url1  = URL.init(string: strng.condensedWhitespace)!
+    
+        let req = URLRequest.init(url:url1 as URL)
         
-        let st : NSString! = NSString.init(string: "https://patient.info/search.asp?searchterm=\(searchText!)&searchcoll=All")
-        
-        let patientUrl : URL = URL.init(string: st as String)!
-        
-        webview.loadRequest(URLRequest(url: patientUrl))
+        webview.loadRequest(req)
     
        
     }

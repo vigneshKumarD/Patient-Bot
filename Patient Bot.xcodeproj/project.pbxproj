@@ -190,7 +190,7 @@
 				TargetAttributes = {
 					5F5A53781ADE67D500F81DF0 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 9ND9S7AS68;
+						DevelopmentTeam = XL5JU6TJKH;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -419,12 +419,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9ND9S7AS68;
+				DEVELOPMENT_TEAM = XL5JU6TJKH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/FriendlyChatSwift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.patientTriage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.patientChatBot;
 				PRODUCT_NAME = "Patient Bot";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -439,14 +439,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9ND9S7AS68;
+				DEVELOPMENT_TEAM = XL5JU6TJKH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/FriendlyChatSwift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.patientTriage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.patientChatBot;
 				PRODUCT_NAME = "Patient Bot";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

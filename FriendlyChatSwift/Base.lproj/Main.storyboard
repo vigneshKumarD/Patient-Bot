@@ -23,13 +23,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat Bot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLb-ik-2ju">
-                                <rect key="frame" x="102" y="154.5" width="116.5" height="36"/>
+                                <rect key="frame" x="102" y="155" width="117" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="zOL-0c-Cx3" customClass="GIDSignInButton">
-                                <rect key="frame" x="109" y="259.5" width="101" height="49"/>
+                                <rect key="frame" x="109" y="260" width="103" height="49"/>
                                 <color key="backgroundColor" red="1" green="0.56078431370000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="brK-Bx-5xD"/>
@@ -182,7 +182,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hj1-fv-xWc" customClass="Customlabel" customModule="Patient_Bot" customModuleProvider="target">
-                                                    <rect key="frame" x="55" y="43" width="173" height="69"/>
+                                                    <rect key="frame" x="55" y="46" width="173" height="66"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -203,7 +203,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="hj1-fv-xWc" secondAttribute="bottom" constant="10" id="OWr-Td-5em"/>
                                                 <constraint firstItem="437-Wp-Agl" firstAttribute="leading" secondItem="QQb-wv-dBf" secondAttribute="leading" constant="1" id="YFP-h3-GCC"/>
                                                 <constraint firstItem="437-Wp-Agl" firstAttribute="top" secondItem="QQb-wv-dBf" secondAttribute="top" constant="3" id="fk6-2j-ilB"/>
-                                                <constraint firstItem="hj1-fv-xWc" firstAttribute="top" secondItem="KBh-bi-YhC" secondAttribute="bottom" constant="-7" id="lM2-z2-7Rg"/>
+                                                <constraint firstItem="hj1-fv-xWc" firstAttribute="top" secondItem="KBh-bi-YhC" secondAttribute="bottom" constant="-4" id="lM2-z2-7Rg"/>
                                                 <constraint firstAttribute="trailing" secondItem="KBh-bi-YhC" secondAttribute="trailing" constant="60" id="rbT-7F-wJ3"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -235,7 +235,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient Bot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CUI-XH-ETH">
-                                        <rect key="frame" x="112" y="10" width="105" height="24.5"/>
+                                        <rect key="frame" x="112" y="10" width="105" height="25"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
                                         <color key="textColor" red="0.12549019607843137" green="0.12549019607843137" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -250,9 +250,9 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nav_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Ir5-dJ-dYP">
-                                        <rect key="frame" x="77" y="8" width="30" height="26"/>
+                                        <rect key="frame" x="85" y="8" width="22" height="26"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="O1C-XV-Y5a"/>
+                                            <constraint firstAttribute="width" constant="22" id="O1C-XV-Y5a"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -341,7 +341,7 @@
                                         <rect key="frame" x="15" y="15" width="290" height="32"/>
                                         <subviews>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7lk-U9-3GT">
-                                                <rect key="frame" x="0.0" y="0.0" width="137.5" height="32"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="138" height="32"/>
                                                 <color key="backgroundColor" red="0.0" green="0.51372549020000002" blue="0.78823529410000004" alpha="0.87031785100000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="Option 1">
@@ -352,7 +352,7 @@
                                                 </connections>
                                             </button>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="to2-CF-7ye">
-                                                <rect key="frame" x="152.5" y="0.0" width="137.5" height="32"/>
+                                                <rect key="frame" x="153" y="0.0" width="137" height="32"/>
                                                 <color key="backgroundColor" red="0.0" green="0.51372549020000002" blue="0.78823529410000004" alpha="0.87031785100000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="Option 2">
@@ -371,7 +371,7 @@
                                         <rect key="frame" x="15" y="67" width="290" height="32"/>
                                         <subviews>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="c1J-40-Ps2">
-                                                <rect key="frame" x="0.0" y="0.0" width="137.5" height="32"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="138" height="32"/>
                                                 <color key="backgroundColor" red="0.0" green="0.51372549020000002" blue="0.78823529410000004" alpha="0.87031785100000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="Option 3">
@@ -382,7 +382,7 @@
                                                 </connections>
                                             </button>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ujU-AD-nSi">
-                                                <rect key="frame" x="152.5" y="0.0" width="137.5" height="32"/>
+                                                <rect key="frame" x="153" y="0.0" width="137" height="32"/>
                                                 <color key="backgroundColor" red="0.0" green="0.51372549020000002" blue="0.78823529410000004" alpha="0.87031785100000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="Option 4">
@@ -402,7 +402,7 @@
                                         <subviews>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="hlf-Ii-9KG">
                                                 <rect key="frame" x="0.0" y="0.0" width="140" height="32"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" red="0.0" green="0.51372549019607838" blue="0.78823529411764703" alpha="0.87" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="None of these">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -412,7 +412,7 @@
                                             </button>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z21-NU-rpb">
                                                 <rect key="frame" x="150" y="0.0" width="140" height="32"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" red="0.0" green="0.51372549019607838" blue="0.78823529411764703" alpha="0.87" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Send">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -537,6 +537,6 @@
         <image name="ic_add_a_photo" width="24" height="24"/>
         <image name="logo2" width="300" height="150"/>
         <image name="mic_Off" width="32" height="32"/>
-        <image name="nav_icon" width="24" height="24"/>
+        <image name="nav_icon" width="32" height="46"/>
     </resources>
 </document>

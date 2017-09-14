@@ -479,7 +479,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         let messageSnapshot: DataSnapshot! = self.messages[indexPath.row]
         guard let message = messageSnapshot.value as? [String:String] else { return  }
         
-        let val : String! = message["SearchTerm"]
+        let val : String = message["SearchTerm"]!
         
         if val != nil {
             let secondview = self.storyboard?.instantiateViewController(withIdentifier: "PatientWebView") as! PatientWebView
@@ -488,13 +488,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
             self.present(secondview, animated: false, completion: nil)
             
         }
-
-      
-    
-
-        
     }
-    
     
   // UITextViewDelegate protocol methods
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -1100,13 +1094,13 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 //        
 //    }
     
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "toWebview" {
-            if let colorViewController = segue.destination as? PatientWebView {
-                colorViewController.searchText = sender as? String
-            }
-        }
-    }
+//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "toWebview" {
+//            if let colorViewController = segue.destination as? PatientWebView {
+//                colorViewController.searchText = (sender as? String)!
+//            }
+//        }
+//    }
 
 }
 
