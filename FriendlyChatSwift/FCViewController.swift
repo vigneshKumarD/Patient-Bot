@@ -270,7 +270,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
 
   @IBAction func didSendMessage(_ sender: UIButton) {
    // _ = textFieldShouldReturn(textField)
-    
+    isVoiceEnabled = false
     
     let data = [Constants.MessageFields.text: textField.text]
         sendMessage(withData: data as! [String : String])
@@ -754,7 +754,7 @@ class FCViewController: UIViewController, UITableViewDataSource, UITableViewDele
         
         if self.audioEngine.isRunning {
             
-            isVoiceEnabled = false
+           // isVoiceEnabled = false
             self.audioEngine.stop()
             recognitionRequest?.endAudio()
             btnVoice.isEnabled = false

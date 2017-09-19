@@ -56,12 +56,12 @@
                   moduleName = "Patient Bot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/FriendlyChatSwift/FCViewController.swift"
-                  timestampString = "527073366.264089"
+                  timestampString = "527518494.067581"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "8">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -71,12 +71,12 @@
                   moduleName = "Patient Bot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/FriendlyChatSwift/FCViewController.swift"
-                  timestampString = "527073366.267382"
+                  timestampString = "527518494.069174"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "20">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -104,12 +104,12 @@
                   moduleName = "Patient Bot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/FriendlyChatSwift/FCViewController.swift"
-                  timestampString = "527073366.280962"
+                  timestampString = "527518494.073286"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "8">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -119,12 +119,12 @@
                   moduleName = "Patient Bot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/FriendlyChatSwift/FCViewController.swift"
-                  timestampString = "527073366.283709"
+                  timestampString = "527518494.075234"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "20">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -155,22 +155,6 @@
             timestampString = "524153518.146306"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "577"
-            endingLineNumber = "577"
-            landmarkName = "requestForApiAi(dataValue:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FriendlyChatSwift/FCViewController.swift"
-            timestampString = "524153518.146306"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1107"
             endingLineNumber = "1107">
             <Locations>
@@ -182,12 +166,12 @@
                   moduleName = "Patient Bot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/FriendlyChatSwift/FCViewController.swift"
-                  timestampString = "527073366.296914"
+                  timestampString = "527518494.079158"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "8">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -197,14 +181,94 @@
                   moduleName = "Patient Bot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vigneshkumar/Downloads/friendlychat-master/ios/swift/FriendlyChatSwift/FCViewController.swift"
-                  timestampString = "527073366.300092"
+                  timestampString = "527518494.080527"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "4">
+                  offsetFromSymbolStart = "20">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FriendlyChatSwift/FCViewController.swift"
+            timestampString = "527517720.817789"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "571"
+            endingLineNumber = "571"
+            landmarkName = "requestForApiAi(dataValue:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FriendlyChatSwift/FCViewController.swift"
+            timestampString = "527518121.616533"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
+            landmarkName = "sendMessage(withData:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FriendlyChatSwift/FCViewController.swift"
+            timestampString = "527518215.058294"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "555"
+            endingLineNumber = "555"
+            landmarkName = "requestForApiAi(dataValue:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FriendlyChatSwift/FCViewController.swift"
+            timestampString = "527518325.933146"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "561"
+            endingLineNumber = "561"
+            landmarkName = "requestForApiAi(dataValue:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FriendlyChatSwift/FCViewController.swift"
+            timestampString = "527518450.87041"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
+            landmarkName = "sendMessage(withData:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
